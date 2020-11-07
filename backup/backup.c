@@ -21,9 +21,12 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
+    // need to lock directory
     if(pid == CHILD_PID)
         execlp("cp", "cp", "-a", argv[1], argv[2], NULL);
 
+    // wait for child process to fin
+    // unlock directory
     syslog(LOG_INFO, "backup process finished");
     
     return 0;

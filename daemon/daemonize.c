@@ -18,16 +18,21 @@ bool to_root();
 void close_descriptors();
 
 bool daemonize() {
+    // make orphan process
     if(!spawn_orphan()) return false;
 
+    // make the orphan the leader
     if(!make_leader()) return false;
 
+    // orphan again
     if(!spawn_orphan()) return false;
 
+    // set read/write permissions 
     umask(0);
 
     if(!to_root()) return false;
 
+    // close file descriptors
     close_descriptors();
 
     return true;

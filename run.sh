@@ -1,9 +1,9 @@
 cd daemon
 make clean
 make
-./myDaemon
+./myDaemon 
 sleep 1s
-./myDaemon backup
+./myDaemon ${1}
 sleep 5s
 killall myDaemon
 cat /var/log/syslog | grep myDaemon

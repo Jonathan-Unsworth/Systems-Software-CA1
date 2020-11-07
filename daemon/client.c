@@ -12,6 +12,7 @@
 #define BUFFER 32
 
 int connect_to_daemon() {
+    // set client socket
     int client_fd = socket(AF_INET, SOCK_STREAM, 0);
 
     if(client_fd == ERROR) return ERROR;
@@ -22,6 +23,7 @@ int connect_to_daemon() {
         .sin_port = htons(PORT)
     };
 
+    // connect to server
     if(connect(client_fd, (struct sockaddr*) &server_address, sizeof(server_address)) == ERROR)
         return ERROR;
 
@@ -35,6 +37,7 @@ bool send_command(int send_fd, const char *command) {
 bool command_acknowledged(int send_fd) {
     char response[BUFFER] = "";
 
+    // receive acknowldgement
     if(recv(send_fd, response, BUFFER, 0) == ERROR) {
         syslog(LOG_ERR, "Did not recieve ACK from server");
         exit(EXIT_FAILURE);
